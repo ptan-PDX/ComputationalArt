@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+
+    <div class = "container">
+    {% for content in homePageContents %}
+    <div class = "card border-0">
+        <div class="card-body">
+            <h5 class="card-title"> {{content["Title"]}}
+                <button type="button" class="btn btn-link btn-lg float-right"><a href = {{content["Link"]}}> {{content["Action"]}}</a></button>
+                 </h5>
+            <p class="card-text">{{ content["Text"] }}</p>            
+
+        </div>
+        <img class="card-img-bottom " src={{content["imagePath"] }} alt="Card image cap">
+
+    </div>
+    <hr>
+    {% endfor %}
+    </div>
+
+{% endblock %}
