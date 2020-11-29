@@ -24,7 +24,7 @@
                 <div class = "card align-items-center border-0 h-100">
                  <img class="card-img-top h-75" src ="{{image_name}}" alt="Country Flag">
                 <div class="card-body text-center">
-                    <h4 class = "card-title">Input Image </h4>
+                    <h4 class = "card-title">Before </h4>
                     <p>Harmony Score:{{score_orig}}</p>
                 </div>
                 </div>
@@ -33,14 +33,13 @@
                 <div class = "card align-items-center border-0 h-100">
                  <img class="card-img-top h-75" src ="{{result_image_name}}" alt="Country Flag">
                 <div class="card-body text-center">
-                    <h4 class = "card-title">Output Image </h4>
-                    <p>Harmony Score:{{score}} Alpha:{{alpha}}</p>
+                    <h4 class = "card-title">After </h4>
+                    <p>Harmony Score:{{score}} </p>
                 </div>
                 </div>
             </div>
         </div>
     {% endif %}
 
-    <hr>
     </div>
 {% endblock %}
