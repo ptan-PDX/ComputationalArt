@@ -14,8 +14,8 @@ def colorhar():
         'title': 'Color Harmonization',
         'jumbotron': {
             "header": "Color Harmonization",
-            "bg_image": "static/images/colorHarJ.png",
-            "text": "Add text"
+            "bg_image": "static/images/colorHarJ.jpg",
+            "text": "Research paper:https://igl.ethz.ch/projects/color-harmonization/harmonization.pdf"
         }
     }
 
