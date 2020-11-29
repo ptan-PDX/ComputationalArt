@@ -1,4 +1,3 @@
-from color import colorhar_page
 from flask import Flask, request, render_template, send_from_directory, redirect
 from flask import abort, redirect, url_for
 import requests
@@ -7,7 +6,12 @@ import pyrebase
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Import and register colorhar_page Blueprint. Blueprint is a concept in Flask, which is used to create components in an application.
+from color import colorhar_page
 app.register_blueprint(colorhar_page)
+
+# Config firebase database which is used in Style Transfer.
 config = {
     "apiKey": "AIzaSyC4pPPvGTTMpXnFogm6f71JOxNg3wSL2wk",
     "authDomain": "style-playground.firebaseapp.com",
@@ -17,8 +21,11 @@ config = {
     "messagingSenderId": "213787329993",
     "appId": "1:213787329993:web:4b6220c697de9ad4c75418"
 }
+
 # FLASK_ENV=development FLASK_APP=app.py python -m flask run
 firebase = pyrebase.initialize_app(config)
+
+# Firebase storage for Style Transfer.
 storage = firebase.storage()
 
 
