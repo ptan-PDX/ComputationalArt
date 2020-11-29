@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, Blueprint, request
 from wheel import harmonize_image
 
+# Use Blueprint to create color harmonization component.
 colorhar_page = Blueprint('colorhar_page', __name__,
                           template_folder='templates')
 
@@ -49,9 +50,12 @@ def colorhar():
         kwargs['image_name'] = destination
         print("destination=", destination)
 
+        # pass path of result image to template
         image_fpath_harmonized = os.path.join(results_dir, filename)
-        har_result = harmonize_image(destination, image_fpath_harmonized)
         kwargs['result_image_name']= image_fpath_harmonized
+
+        # pass harmony score to templage: the lower the harmony score, the more the image is harmony.
+        har_result = harmonize_image(destination, image_fpath_harmonized)
         kwargs.update(har_result)
 
         return render_template('colorhar.html', **kwargs)
