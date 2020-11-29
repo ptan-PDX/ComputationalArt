@@ -1,29 +1,23 @@
-{% extends "base.html" %}
-{% set active_page = "gallery" %}
-{% block title %} {{title}} {% endblock %}
-
-
-{% block content %}
-
+{% extends "base.html" %} {% set active_page = "gallery" %} {% block title %}
+{{title}} {% endblock %} {% block content %}
 
 <div class="container">
-  
-  <div class = "row">
-    {% for recipe in recipes %}
-    <div class = "col-lg-3">
-      <div class = "card mx-auto h-100 border-0" >
-        <img class="card-img-top h-76" src ={{recipe.flag }} alt="Country Flag">
+  <div class="row">
+    {% for img in range(185, 215) %} {% set image_src =
+    'https://firebasestorage.googleapis.com/v0/b/style-playground.appspot.com/o/results%2F'
+    ~ img ~ '.png?alt=media&token=49d644f7-b9ee-4d91-9aaf-681e348e9071' %}
+    <div class="col-lg-3">
+      <div class="card mx-auto h-100 border-0">
+        <img class="card-img-top h-76" src="{{ image_src }} alt="Pokemon" />
         <div class="card-body">
-          <p class="card-text text-left">{{ recipe.name }}</p>
+          <p class="card-text text-left">{{ img }}</p>
         </div>
       </div>
     </div>
     {% endfor %}
   </div>
 
-<hr>
-
+  <hr />
 </div>
 
- 
 {% endblock %}
