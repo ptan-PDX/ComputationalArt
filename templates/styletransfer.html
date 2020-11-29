@@ -1,12 +1,85 @@
-{% extends "base.html" %}
-{% set active_page = "styletransfer" %}
-{% block title %} {{title}} {% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  {% extends "base.html" %} {% set active_page = "styletransfer" %} {% block
+  title %} Computational Art Studio|Style Transfer {% endblock %} {% block
+  content %}
   <div class="container">
- 
-
-
-    <hr>
+    <h1>Style Transfer: Upload your image</h1>
+    <form
+      id="upload-form"
+      action="{{ url_for('styletransfer', formid=1) }}"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupFile">Change Style</span>
+        </div>
+        <div class="custom-file">
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            onchange="this.form.submit()"
+            class="custom-file-input"
+            id="file-picker"
+            aria-describedby="inputGroupFile"
+          />
+          <label class="custom-file-label" for="file-picker"
+            >Upload your file</label
+          >
+        </div>
+      </div>
+    </form>
+    <div class="row" style="margin-top: 10px">
+      {% if image_name %}
+      <div class="col-sm-5">
+        <div class="card align-items-center border-0 h-100">
+          <img
+            class="card-img-top h-75"
+            src="{{image_name}}"
+            alt="Uploaded Image"
+          />
+          <div class="card-body text-center">
+            <h4 class="card-title">Your Input Image</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1" style="margin-top: 10px">
+        <form
+          id="form-rotate"
+          action="{{ url_for('styletransfer', formid=2) }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <button id="btn-style" class="btn btn-lg btn-success" type="submit">
+            Go
+          </button>
+          <input
+            type="hidden"
+            class="hidden"
+            name="image"
+            value="{{ image_name }}"
+          />
+        </form>
+      </div>
+      {% endif %} {% if result_image_name %}
+      <div class="col-sm-5">
+        <div class="card align-items-center border-0 h-100">
+          <img
+            class="card-img-top h-75"
+            src="{{result_image_name}}"
+            alt="Result Image"
+          />
+          <div class="card-body text-center">
+            <h4 class="card-title">Output Image</h4>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <hr />
   </div>
-{% endblock %}
+
+  {% endblock %}
+</html>
