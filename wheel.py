@@ -20,8 +20,11 @@ b = 0
 # The smaller epsilon, the smaller c, the wider the bell curve, the less concentration on border.
 epsilon = 0.000000000000000000000000001
 c = np.sqrt(-180*180/2/np.log(epsilon))
+
+
 def normalized_gaussian(x, a=1, b=0, c=32):
     return a * np.exp(-(x-b)*(x-b)/(2*c*c))
+
 
 class HarmonicWheel:
     def __init__(self, type):
@@ -30,7 +33,7 @@ class HarmonicWheel:
         self.update_alpha(alpha=0)
 
         # self.sectors == [[-9.0, 9.0]], for alpha=0, type i.
-    
+
     def get_center_hue_by_border_id(self, border_id):
         sector_id = int(border_id / 2)
         h_center, w = self.get_center_hue_and_arc_of_sector(sector_id)
@@ -81,7 +84,7 @@ class HarmonicWheel:
         border_id = None
         for i, sector in enumerate(self.sectors):
             lb, rb = sector
-            c_hue = (lb + rb) / 2 
+            c_hue = (lb + rb) / 2
             if lb <= h <= rb:
                 if h < c_hue:
                     border_id = i * 2
@@ -93,7 +96,7 @@ class HarmonicWheel:
                 else:
                     border_id = i * 2 + 1
         return border_id
-    
+
     def hue_to_border_arc(self, h):
         # border_id: 0 left of first sector, 1 right of first sector...
         # The arc shouldn't exceed +-180 degree.
@@ -120,8 +123,8 @@ class HarmonicWheel:
             if abs(d) < abs(d_nearest):
                 d_nearest = d
                 border_id = i
-        return border_id, d_nearest        
-    
+        return border_id, d_nearest
+
     def get_harmonic_score_of_pixel(self, pixel):
         h_pixel, s_pixel, _v_pixel = pixel
         _border_id, d = self.hue_to_border_arc(h_pixel)
@@ -129,15 +132,15 @@ class HarmonicWheel:
 
     def preprocess_image(self, img_hsv):
         img_hsv = img_hsv.copy()
-        img_hsv[:,:,0] = img_hsv[:,:,0] * 2
-        img_hsv[:,:,1] = img_hsv[:,:,1] / 255
-        img_hsv[:,:,2] = img_hsv[:,:,2] / 255
+        img_hsv[:, :, 0] = img_hsv[:, :, 0] * 2
+        img_hsv[:, :, 1] = img_hsv[:, :, 1] / 255
+        img_hsv[:, :, 2] = img_hsv[:, :, 2] / 255
         return img_hsv
-    
+
     def restore_image(self, img_hsv):
-        img_hsv[:,:,0] = np.round(np.clip(img_hsv[:,:,0] / 2, 0, 180))
-        img_hsv[:,:,1] = np.round(np.clip(img_hsv[:,:,1] * 255, 0, 255))
-        img_hsv[:,:,2] = np.round(np.clip(img_hsv[:,:,2] * 255, 0, 255))
+        img_hsv[:, :, 0] = np.round(np.clip(img_hsv[:, :, 0] / 2, 0, 180))
+        img_hsv[:, :, 1] = np.round(np.clip(img_hsv[:, :, 1] * 255, 0, 255))
+        img_hsv[:, :, 2] = np.round(np.clip(img_hsv[:, :, 2] * 255, 0, 255))
         return img_hsv.astype(np.uint8)
 
     def get_harmonic_score_image(self, img_hsv):
@@ -176,10 +179,10 @@ class HarmonicWheel:
         for i in range(h):
             for j in range(w):
                 h_pixel = img_hsv[i, j, 0]
-                
+
                 border_id, _d = self.hue_to_border_arc(h_pixel)
                 h_prime = self.shift_hue(h_pixel, border_id)
-                img_hsv[i,j,0] = h_prime
+                img_hsv[i, j, 0] = h_prime
 
         img_hsv = self.restore_image(img_hsv)
         return img_hsv
@@ -229,11 +232,11 @@ def harmonize_image(fpath, fpath_har):
 
     cv2.imwrite(fpath_har, img_bgr_har)
 
-    return {'score_orig': format(score_orig,'.3f'), 'score': format(min_score,'.3f'), 'alpha': min_alpha}
+    return {'score_orig': format(score_orig, '.3f'), 'score': format(min_score, '.3f'), 'alpha': min_alpha}
 
 
 if __name__ == "__main__":
-    
+
     # fname = "example1_orig.jpg"
     # img_fname_har = "example_2_har_debug.jpg"
 
@@ -259,20 +262,19 @@ if __name__ == "__main__":
     w_new = int(w / scale_factor)
     img = cv2.resize(img_orig, (w_new, h_new))
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype(float)
-    
+
     img_size = h_new * w_new
-    
+
     best_type = best_alpha = None
     best_score = 180
     best_of_each_type = []
-        # {"type":"i","alpha":0,"min_score":0},
-        # {"type":"V","alpha":0,"min_score":0},
-        # {"type":"L","alpha":0,"min_score":0},
-        # {"type":"I","alpha":0,"min_score":0},
-        # {"type":"T","alpha":0,"min_score":0},
-        # {"type":"Y","alpha":0,"min_score":0},
-        # {"type":"X","alpha":0,"min_score":0},
-    
+    # {"type":"i","alpha":0,"min_score":0},
+    # {"type":"V","alpha":0,"min_score":0},
+    # {"type":"L","alpha":0,"min_score":0},
+    # {"type":"I","alpha":0,"min_score":0},
+    # {"type":"T","alpha":0,"min_score":0},
+    # {"type":"Y","alpha":0,"min_score":0},
+    # {"type":"X","alpha":0,"min_score":0},
 
     for t_type in templates.keys():
         wheel = HarmonicWheel(t_type)
@@ -289,11 +291,14 @@ if __name__ == "__main__":
             best_score = min_score
             best_type = t_type
             best_alpha = min_alpha
-        template_best = {"type":t_type,"alpha":min_alpha,"min_score":min_score}
+        template_best = {"type": t_type,
+                         "alpha": min_alpha, "min_score": min_score}
         best_of_each_type.append(template_best)
 
-        print("Type {:s}, Alpha {:3d}, Score {:.2f}".format(t_type, min_alpha, min_score))
-    print("Best: \nType {:s}, Alpha {:3d}, Score {:.2f}".format(best_type, best_alpha, best_score))
+        print("Type {:s}, Alpha {:3d}, Score {:.2f}".format(
+            t_type, min_alpha, min_score))
+    print("Best: \nType {:s}, Alpha {:3d}, Score {:.2f}".format(
+        best_type, best_alpha, best_score))
     print(best_of_each_type)
     # sys.exit(0)
 
@@ -316,7 +321,7 @@ if __name__ == "__main__":
         img_bgr_har = cv2.cvtColor(img_hsv_har, cv2.COLOR_HSV2BGR)
         if best_type == "I":
             best_type = "bigI"
-        img_fname_har = best_type +"_harmonized.jpg"
+        img_fname_har = best_type + "_harmonized.jpg"
         cv2.imwrite(img_fname_har, img_bgr_har)
 
         img_hsv = cv2.cvtColor(img_bgr_har, cv2.COLOR_BGR2HSV).astype(float)
