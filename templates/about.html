@@ -3,9 +3,17 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block content %}
-    <div class = "container">
-        
-        
-        <hr>
+<div class = "container">
+    {% for content in aboutPageContents %}
+    <div class = "card border-0">
+        <div class="card-body">
+            <h5 class="card-title"> {{content["Title"]}}</h5>
+            <p class="card-text">{{ content["Text"] }}</p>            
+
+        </div>
+
+    </div>
+    <hr>
+    {% endfor %}
     </div>
 {% endblock %}

@@ -1,4 +1,3 @@
-from color import colorhar_page
 from flask import Flask, request, render_template, send_from_directory, redirect
 from flask import abort, redirect, url_for
 import requests
@@ -7,7 +6,12 @@ import pyrebase
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Import and register colorhar_page Blueprint. Blueprint is a concept in Flask, which is used to create components in an application.
+from color import colorhar_page
 app.register_blueprint(colorhar_page)
+
+# Config firebase database which is used in Style Transfer.
 config = {
     "apiKey": "AIzaSyC4pPPvGTTMpXnFogm6f71JOxNg3wSL2wk",
     "authDomain": "style-playground.firebaseapp.com",
@@ -17,8 +21,11 @@ config = {
     "messagingSenderId": "213787329993",
     "appId": "1:213787329993:web:4b6220c697de9ad4c75418"
 }
+
 # FLASK_ENV=development FLASK_APP=app.py python -m flask run
 firebase = pyrebase.initialize_app(config)
+
+# Firebase storage for Style Transfer.
 storage = firebase.storage()
 
 
@@ -30,7 +37,7 @@ def home():
         'jumbotron': {
             "header": "Image Playground",
             "bg_image": url_for('static', filename='/images/bg1450496.jpg'),
-            "text": "Add text about **"
+            "text": " "
         },
         'homePageContents': [{
             'Title': "Style Transer",
@@ -67,7 +74,7 @@ def styletransfer():
         'jumbotron': {
             "header": "Style Transfer",
             "bg_image": "static/images/styleTransfer.jpeg",
-            "text": "Add text"
+            "text": "Research paper: https://openaccess.thecvf.com/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf"
 
         }
     }
@@ -130,7 +137,7 @@ def gallery():
         'jumbotron': {
             "header": "Computational Art Gallery",
             "bg_image": "static/images/bg1450496.jpg",
-            "text": "Add text"
+            "text": "Style Transfer selected images from PokéAPI"
 
         },
         'recipes': response.json()
@@ -145,7 +152,23 @@ def about():
         'jumbotron': {
             "header": "AI & Art",
             "bg_image": "static/images/bg1450496.jpg",
-            "text": "Add text"
+            "text": ""
+        },
+        'aboutPageContents': [{
+            'Title': "AI & Art",
+            "Text": " Text for AI & Art"
+
+        },
+            {
+            "Title": "References",
+            "Text": " "
+
+        },
+            {
+            "Title": "Thanks",
+            "Text": ""
+
         }
+        ]
     }
     return render_template('about.html', **kwargs)

@@ -1,6 +1,8 @@
 import sys
 import cv2
 import numpy as np
+# I reproduced a research paper in this python script.
+# To understand the code, please read this paper first :https://igl.ethz.ch/projects/color-harmonization/harmonization.pdf
 
 # FIXME: Type L shouldn't have a score that is smaller than type T.
 templates = {
