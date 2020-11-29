@@ -30,7 +30,7 @@ def home():
         'jumbotron': {
             "header": "Image Playground",
             "bg_image": url_for('static', filename='/images/bg1450496.jpg'),
-            "text": "Add text about **"
+            "text": " "
         },
         'homePageContents': [{
             'Title': "Style Transer",
@@ -67,7 +67,7 @@ def styletransfer():
         'jumbotron': {
             "header": "Style Transfer",
             "bg_image": "static/images/styleTransfer.jpeg",
-            "text": "Add text"
+            "text": "Research paper: https://openaccess.thecvf.com/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf"
 
         }
     }
@@ -130,7 +130,7 @@ def gallery():
         'jumbotron': {
             "header": "Computational Art Gallery",
             "bg_image": "static/images/bg1450496.jpg",
-            "text": "Add text"
+            "text": "Style Transfer selected images from PokéAPI"
 
         },
         'recipes': response.json()
@@ -145,7 +145,23 @@ def about():
         'jumbotron': {
             "header": "AI & Art",
             "bg_image": "static/images/bg1450496.jpg",
-            "text": "Add text"
+            "text": ""
+        },
+        'aboutPageContents': [{
+            'Title': "AI & Art",
+            "Text": " Text for AI & Art"
+
+        },
+            {
+            "Title": "References",
+            "Text": " "
+
+        },
+            {
+            "Title": "Thanks",
+            "Text": ""
+
         }
+        ]
     }
     return render_template('about.html', **kwargs)
