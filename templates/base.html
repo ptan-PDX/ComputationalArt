@@ -63,6 +63,15 @@
       </nav>
     </header>
 
+    <div class="jumbotron " 
+    style = "background-image:linear-gradient(to bottom,
+   rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100% ),url({{jumbotron.bg_image}})">
+        <h1 class="display-4">{{jumbotron.header}}</h1>
+        <p class = "lead">{{jumbotron.text}}  </p>
+        <hr class="my-4">
+        <h5>h5</h5>
+        <p class="card-text"><small class="text-muted align-text-bottom">Image Source:</small></p>
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
 
     <div>
