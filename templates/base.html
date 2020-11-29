@@ -69,15 +69,17 @@
         <h1 class="display-4">{{jumbotron.header}}</h1>
         <p class = "lead">{{jumbotron.text}}  </p>
         <hr class="my-4">
-        <h5>h5</h5>
-        <p class="card-text"><small class="text-muted align-text-bottom">Image Source:</small></p>
+        <h5>Have fun!</h5>
+        <p class="card-text"><small class="text-muted align-text-bottom"></small></p>
     </div>
-    <div id="content">{% block content %}{% endblock %}</div>
+    
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
 
-    <div>
-      <div>
-        <p class="text-center">@Computational Art Studio since 2020</p>
-      </div>
-    </div>
   </body>
+
+  <div class = "fixed-bottom">
+    <p class="text-center">@Computational Art Studio since 2020</p>
+  </div>
 </html>
